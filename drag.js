@@ -1,23 +1,48 @@
-// 拖拽  down  move  up
-// 鼠标距离div位置始终不变化
+/*  封装拖拽  1 快速移动 失去焦点 2 会选中配角 */
 
-// 注意处理 1 快速拖动会失去焦点  2 会选中别的文字什么的  阻止默认事件
 var oDiv = document.getElementsByTagName('div')[0];
 
-oDiv.onmousedown =down;
+on(oDiv,'mousedown',down);
+
 
 function down(e){
-    e=e||window.event;
-    this.x = e.clientX-this.offsetLeft; // 保存鼠标距离div x
-    this.y = e.clientY-this.offsetTop; // 保存鼠标距离div y
-
-    // 处理快速移动 失去焦点
-    document.onmousemove = move;
-
+    this.x = e.clientX;
+    this.y= e.clientY;
+    this.l = this.offsetLeft;
+    this.t = this.offsetTop;
+    if(this.setCapture){
+        // ie
+        this.setCapture();
+        on(this,'mousemove',move)
+        on(this,'mouseup',up)
+    }else{
+        // 标准
+        var _this =this;
+        this.Move = function (e) {
+            move.call(_this,e);
+        };
+        this.Up = function () {
+            up.call(_this);
+        }
+        on(document,'mousemove',this.Move)
+        on(document,'mouseup',this.Up)
+    //     阻止默认事件
+        e.preventDefault();
+    }
 }
+
 function move(e){
-    e=e||window.event;
+    this.style.left = e.clientX-this.x+this.l+'px';
+    this.style.top = e.clientY-this.y+this.t+'px';
+}
 
-    oDiv.style.left = e.clientX-oDiv.x;
-
+function up(){
+    if(this.releaseCapture){
+        this.releaseCapture();
+        off(this,'mousemove',move)
+        off(this,'mouseup',up)
+    }else{
+        off(document,'mousemove',this.Move)
+        off(document,'mouseup',this.Up)
+    }
 }
