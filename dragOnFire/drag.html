@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>构造函数 拖拽</title>
+    <style>
+        *{padding:0;margin: 0;}
+        div{width: 100px;  border-radius: 100%;
+            font-size: 26px; font-weight: bold;
+            text-align: center; line-height: 100px;
+            height: 100px; position: fixed;left: 0;top: 0;}
+        .div1{background: seashell; left: 200px; }
+        .div2{background: sandybrown;left:400px;}
+        .div3{background: salmon;left: 600px;}
+        .div4{ background: slateblue;left: 800px;}
+    </style>
+</head>
+<body>
+<div id="div" class="div1">1</div>
+<div class="div2">2</div>
+<div class="div3">3</div>
+<div class="div4">4</div>
+
+<script src="../../utils.js"></script>
+<script src="../2event.js"></script>
+<script src="drag.js"></script>
+
+<script>
+    var aDiv =document.getElementsByTagName('div');
+    for(var i=0;i<aDiv.length;i++){
+        var drag =new Drag({
+            ele: aDiv[i]
+        })
+//        drag.on('mousedown',fn1);
+//        drag.on('mouseup',fn2);
+
+        // 写一个拖拽的时候 层级变化最高
+        drag.changeIndex();
+    }
+
+    function fn1(){
+        this.ele.style.background='#ccc';
+    }
+    function fn2(){
+        this.ele.style.background='skyblue';
+    }
+
+
+
+
+
+</script>
+</body>
+</html>

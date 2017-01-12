@@ -95,6 +95,11 @@ function fire(type,e){
 }
 
 
+function processThis(fn,nowThis){
+    return function (e) {
+        fn.call(nowThis,e)
+    }
+}
 
 
 

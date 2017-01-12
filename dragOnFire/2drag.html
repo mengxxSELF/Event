@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>构造函数 拖拽</title>
+    <style>
+        *{padding:0;margin: 0;}
+        div{width: 100px;  border-radius: 100%;
+            height: 100px; position: fixed;left: 0;top: 0; background: skyblue;}
+    </style>
+</head>
+<body>
+<div id="div"></div>
+<script src="../2event.js"></script>
+<script src="drag.js"></script>
+<script>
+    var oDiv =document.getElementById('div');
+    // 构造函数  + 订阅发布模式
+    var drag =new Drag({
+        ele: oDiv
+    })
+    drag.on('mousedown', function () {
+        this.ele.style.background='#ccc';
+    })
+    drag.on('mouseup', function () {
+        this.ele.style.background='skyblue';
+    })
+
+    // 写一个拖拽的时候 层级变化最高
+
+
+
+
+
+</script>
+</body>
+</html>
